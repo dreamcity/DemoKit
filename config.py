@@ -7,6 +7,6 @@ SECRET_KEY = 'This is a flask demoKit'
 DB_NAME = 'demoKit_db'
 
 DATABASE = MongoClient()[DB_NAME]
-USERS_COLLECTION = DATABASE.user
+USERS_COLLECTION = DATABASE.users
 
 DEBUG = True

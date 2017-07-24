@@ -1,6 +1,7 @@
 # from flask import render_template, session, redirect, url_for, current_app
 from flask import Flask,current_app,render_template,request,redirect,url_for,session
-from flask.ext.paginate import Pagination
+#from flask.ext.paginate import Pagination
+from flask_paginate import Pagination
 
 #from ..email import send_email
 from . import main
@@ -35,11 +36,8 @@ def show_users():
     # if not total:
     total = current_app.config['USERS_COLLECTION'].find().count()
     page, per_page, offset = get_page_items()
-    if page * per_page > total:
-        users_info = ""
-    else:
-        users_info = current_app.config['USERS_COLLECTION'].find({},{"_id":0}).skip(offset).limit(per_page)
-    pagination = Pagination(page=page,per_page=per_page,total=total,css_framework='bootstrap3',record_name="users_info")
+    users_info = current_app.config['USERS_COLLECTION'].find({}).skip(offset).limit(per_page)
+    pagination = Pagination(page=page,per_page=per_page,total=total,css_framework='bootstrap3',record_name="UsersInfo")
     # return render_template('users.html', users=users_info,page=page,per_page=per_page,pagination=pagination)
     return render_template('users.html', total = total,users=users_info,pagination=pagination)
 
@@ -47,7 +45,7 @@ def get_page_items():
     page = int(request.args.get('page', 1))
     per_page = request.args.get('per_page')
     if not per_page:
-        per_page = current_app.config.get('PER_PAGE', 10)
+        per_page = current_app.config.get('PER_PAGE', 2)
     else:
         per_page = int(per_page)
 
