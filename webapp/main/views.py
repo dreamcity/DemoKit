@@ -31,14 +31,15 @@ def index():
 
 @main.route("/users",methods=["GET"])
 def show_users():
-    # total = current_app.config['TOTAL_USERS']
-    # total = current_app.config['TOTAL_USERS']
-    # if not total:
     total = current_app.config['USERS_COLLECTION'].find().count()
     page, per_page, offset = get_page_items()
     users_info = current_app.config['USERS_COLLECTION'].find({}).skip(offset).limit(per_page)
     pagination = Pagination(page=page,per_page=per_page,total=total,css_framework='bootstrap3',record_name="UsersInfo")
-    # return render_template('users.html', users=users_info,page=page,per_page=per_page,pagination=pagination)
+    start_pt = offset+1
+    end_pt = offset+per_page
+    if end_pt > total:
+        end_pt = total
+    pagination.display_msg = "Display %d-%d, Total %d" %(start_pt,end_pt,total)
     return render_template('users.html', total = total,users=users_info,pagination=pagination)
 
 def get_page_items():
