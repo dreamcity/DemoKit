@@ -29,27 +29,27 @@ def index():
                            form=form, name=session.get('name'),
                            known=session.get('known', False))
 
-@main.route("/users",methods=["GET"])
-def show_users():
-    total = current_app.config['USERS_COLLECTION'].find().count()
-    page, per_page, offset = get_page_items()
-    users_info = current_app.config['USERS_COLLECTION'].find({}).skip(offset).limit(per_page)
-    pagination = Pagination(page=page,per_page=per_page,total=total,css_framework='bootstrap3',record_name="UsersInfo")
-    start_pt = offset+1
-    end_pt = offset+per_page
-    if end_pt > total:
-        end_pt = total
-    pagination.display_msg = "Display %d-%d, Total %d" %(start_pt,end_pt,total)
-    return render_template('users.html', total = total,users=users_info,pagination=pagination)
+# @main.route("/users",methods=["GET"])
+# def show_users():
+#     total = current_app.config['USERS_COLLECTION'].find().count()
+#     page, per_page, offset = get_page_items()
+#     users_info = current_app.config['USERS_COLLECTION'].find({}).skip(offset).limit(per_page)
+#     pagination = Pagination(page=page,per_page=per_page,total=total,css_framework='bootstrap3',record_name="UsersInfo")
+#     start_pt = offset+1
+#     end_pt = offset+per_page
+#     if end_pt > total:
+#         end_pt = total
+#     pagination.display_msg = "Display %d-%d, Total %d" %(start_pt,end_pt,total)
+#     return render_template('users.html', total = total,users=users_info,pagination=pagination)
 
-def get_page_items():
-    page = int(request.args.get('page', 1))
-    per_page = request.args.get('per_page')
-    if not per_page:
-        per_page = current_app.config.get('PER_PAGE', 2)
-    else:
-        per_page = int(per_page)
+# def get_page_items():
+#     page = int(request.args.get('page', 1))
+#     per_page = request.args.get('per_page')
+#     if not per_page:
+#         per_page = current_app.config.get('PER_PAGE', 2)
+#     else:
+#         per_page = int(per_page)
 
-    offset = (page - 1) * per_page
-    return page, per_page, offset
+#     offset = (page - 1) * per_page
+#     return page, per_page, offset
 
