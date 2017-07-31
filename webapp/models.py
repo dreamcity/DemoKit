@@ -11,9 +11,14 @@ class User(UserMixin):
 	"""docstring for User"""
 	def __init__(self,user_info):
 		super(User, self).__init__()
-		self.username = user_info["username"]
-		self.email = user_info["email"]
-		self.user_id = user_info["_id"]
+		if user_info:
+			self.username = user_info["username"]
+			self.email = user_info["email"]
+			self.user_id = user_info["_id"]
+		else:
+			self.username = ""
+			self.email = ""
+			self.user_id = 0
 		self.confirmed = False
 
 	def get_id(self):
@@ -32,7 +37,7 @@ class User(UserMixin):
 		if data.get('confirm') != self.user_id:
 			return False
 		self.confirmed = True
-		db.session.add(self)
+		db[DB_NAME][USERS_COLLECTION].update_one({"_id":self.user_id},{'$set':{'confirmed':True}},upsert = True)
 		return True
 
 

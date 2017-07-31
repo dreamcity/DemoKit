@@ -16,8 +16,8 @@ def run_server(app):
         #'log.access_file': 'site.log',
 	#'log.screen': True,
         'server.socket_port': 5000,
-        #'server.socket_host': '192.168.0.114'
-        'server.socket_host': '127.0.0.1'
+        'server.socket_host': '192.168.0.118'
+        #'server.socket_host': '127.0.0.1'
     })
  
     # Start the CherryPy WSGI web server
