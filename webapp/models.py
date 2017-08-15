@@ -15,11 +15,12 @@ class User(UserMixin):
 			self.username = user_info["username"]
 			self.email = user_info["email"]
 			self.user_id = user_info["_id"]
+			self.confirmed = user_info["confirmed"]
 		else:
 			self.username = ""
 			self.email = ""
 			self.user_id = 0
-		self.confirmed = False
+			self.confirmed = False
 
 	def get_id(self):
 		return chr(self.user_id)

@@ -5,18 +5,20 @@ from flask_moment import Moment
 from flask_login import LoginManager
 
 from pymongo import MongoClient
-#from celery import Celery
+from celery import Celery
+
+from config import *
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 
 db = MongoClient()
-#celery = Celery()
+celery  = Celery(APP_NAME, broker=CELERY_BROKER_URL)
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth.signin'
 
 
 def create_app():
@@ -27,8 +29,8 @@ def create_app():
     mail.init_app(app)
     moment.init_app(app)
     login_manager.init_app(app)
-    
-    #celery.config_from_object('config')
+
+    celery.conf.update(app.config) 
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

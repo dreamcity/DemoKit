@@ -12,7 +12,6 @@ from ..email import send_email
 
 @auth.before_app_request
 def before_request():
-	#print("1111111111111",current_user,current_user.is_authenticated,current_user.confirmed,request.endpoint)
 	if current_user.is_authenticated \
 			and not current_user.confirmed \
 			and request.endpoint[:5] != 'auth.'\
@@ -21,8 +20,6 @@ def before_request():
 
 @auth.route('/unconfirmed')
 def unconfirmed():
-	#print("unconfirmed1",current_user,current_user.is_anonymous)
-	#print("unconfirmed2",current_user.confirmed)
 	if current_user.is_anonymous or current_user.confirmed:
 		return redirect(url_for('main.index'))
 	return render_template('auth/unconfirmed.html')
@@ -83,11 +80,8 @@ def confirm(token):
 @auth.route('/confirm')
 @login_required
 def resend_confirmation():
-	print("confirm message 0000000",current_user)
 	token = current_user.generate_confirmation_token()
-	print("confirm message 1111",token)
 	send_email(current_user.email, 'Confirm Your Account','auth/email/confirm', user=current_user, token=token)
-	print("confirm message")
 	flash('A new confirmation email has been sent to you by email.')
 	return redirect(url_for('main.index'))
                             
