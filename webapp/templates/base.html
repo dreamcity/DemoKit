@@ -24,18 +24,15 @@
 <!--             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.index') }}">Home</a></li>
             </ul> -->
-<!--             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('main.index') }}">Seting</a></li>
-                        <li><a href="{{ url_for('main.index') }}">Sign Out</a></li>
-                    </ul>
-                </li>
-            </ul> -->
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('auth.signout') }}">Sign Out</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('auth.setting') }}">Seting</a></li>
+                            <li><a href="{{ url_for('auth.signout') }}">Sign out</a></li>
+                       </ul>
+		    </li>
                 {% else %}
                     <li><a href="{{ url_for('auth.signin') }}">Sign in</a></li>
                     <li><a href="{{ url_for('auth.signup') }}">Sign up</a></li>

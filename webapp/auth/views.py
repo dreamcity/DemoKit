@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 
 from . import auth
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, PasswordForm
 from .. import db
 from ..models import *
 
@@ -47,6 +47,21 @@ def signout():
 	return redirect(url_for('main.index'))
 
 
+@auth.route('/setting',methods=['GET', 'POST'])
+@login_required
+def setting():
+	form = PasswordForm()
+	if form.validate_on_submit():
+		user_id = current_user.user_id
+		if not check_password_hash(current_user.password_hash, form.old_pwd.data):
+			flash('Password is wrong.')
+		else:
+			db[DB_NAME][USERS_COLLECTION].update_one({"_id":user_id},{'$set':{"password":generate_password_hash(form.new_pwd.data)}})
+			return redirect(request.args.get('next') or url_for('main.index'))
+		return render_template('auth/setting.html', form=form)
+	return render_template('auth/setting.html', form=form)
+
+
 @auth.route('/signup',methods = ['GET', 'POST'])
 def signup():
 	form = SignupForm()
@@ -57,12 +72,14 @@ def signup():
 		user_info["username"] = form.username.data
 		user_info["email"] = form.email.data
 		user_info["password"] = generate_password_hash(form.password.data)
-		db[DB_NAME][USERS_COLLECTION].update_one({"_id":uid},{'$set':user_info},upsert = True)
+		#db[DB_NAME][USERS_COLLECTION].update_one({"_id":uid},{'$set':user_info},upsert = True)
 		user_info["_id"] = uid
+		user_info["confirmed"] = False
 		user = User(user_info)
 		token = user.generate_confirmation_token()
 		send_email(user.email, 'Confirm Your Account','auth/email/confirm', user=user, token=token)
 		flash('A confirmation email has been sent to you by email.')
+		db[DB_NAME][USERS_COLLECTION].update_one({"_id":uid},{'$set':user_info},upsert = True)
 		return redirect(url_for('auth.signin'))
 	return render_template('auth/signup.html', form=form)
 
@@ -84,4 +101,6 @@ def resend_confirmation():
 	send_email(current_user.email, 'Confirm Your Account','auth/email/confirm', user=current_user, token=token)
 	flash('A new confirmation email has been sent to you by email.')
 	return redirect(url_for('main.index'))
+
+
                             

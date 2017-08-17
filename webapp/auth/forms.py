@@ -28,3 +28,10 @@ class SignupForm(FlaskForm):
 	def validate_username(self, field):
 		if db[DB_NAME][USERS_COLLECTION].find_one({"username":field.data}):
 			raise ValidationError('Username already in use.')
+
+
+class PasswordForm(FlaskForm):
+	old_pwd = PasswordField('Old Password', validators=[Required()])
+	new_pwd = PasswordField('New password', validators=[Required()])
+	confirm_pwd = PasswordField('Confirm password', validators=[Required(),EqualTo('new_pwd', message='Passwords must match.')])
+	submit = SubmitField('Update Password')

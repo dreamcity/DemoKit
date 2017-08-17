@@ -11,16 +11,26 @@ class User(UserMixin):
 	"""docstring for User"""
 	def __init__(self,user_info):
 		super(User, self).__init__()
-		if user_info:
+		if "username" in user_info:
 			self.username = user_info["username"]
-			self.email = user_info["email"]
-			self.user_id = user_info["_id"]
-			self.confirmed = user_info["confirmed"]
 		else:
 			self.username = ""
+		if "email" in user_info:
+			self.email = user_info["email"]
+		else:
 			self.email = ""
-			self.user_id = 0
+		if "_id" in user_info:
+			self.user_id = user_info["_id"]
+		else:
+			self.user_id = -1
+		if "confirmed" in user_info:
+			self.confirmed = user_info["confirmed"]
+		else:
 			self.confirmed = False
+		if "password" in user_info:
+			self.password_hash = user_info["password"]
+		else:
+			self.password_hash = ""
 
 	def get_id(self):
 		return chr(self.user_id)
