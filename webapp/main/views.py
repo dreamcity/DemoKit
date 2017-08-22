@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+import os
+import time
+import hashlib
+
 # from flask import render_template, session, redirect, url_for, current_app
 from flask import Flask,current_app,render_template,request,redirect,url_for,session
 #from flask.ext.paginate import Pagination
@@ -5,13 +10,37 @@ from flask import Flask,current_app,render_template,request,redirect,url_for,ses
 
 #from ..email import send_email
 from . import main
-# from .forms import NameForm
+from .forms import UploadForm
+from .. import photos
 
-
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    form = UploadForm()
+    if form.validate_on_submit():
+        for filename in request.files.getlist('photo'):
+            name = hashlib.md5(('admin' + str(time.time())).encode('UTF-8')).hexdigest()[:15]
+            photos.save(filename, name=name + '.')
+        success = True
+    else:
+        success = False
+    return render_template('index.html', form=form, success=success)
 
+@main.route('/manage')
+def manage_file():
+    files_list = os.listdir(current_app.config['UPLOADED_PHOTOS_DEST'])
+    return render_template('manage.html', files_list=files_list)
+
+
+@main.route('/open/<filename>')
+def open_file(filename):
+    file_url = photos.url(filename)
+    return render_template('browser.html', file_url=file_url)
+
+@main.route('/delete/<filename>')
+def delete_file(filename):
+    file_path = photos.path(filename)
+    os.remove(file_path)
+    return redirect(url_for('main.manage_file'))
 # @main.route('/', methods=['GET', 'POST'])
 # def index():
 #     return render_template('index.html')

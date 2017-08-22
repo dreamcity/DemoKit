@@ -11,7 +11,7 @@ def send_async_email(sender,subject,recipients,mail_msgfile):
     msg_code ="mailx -a 'Content-Type: text/html' -r %s -s '%s'  %s < %s" %(sender,subject," ".join(recipients),mail_msgfile)
     #print("msg_code:",msg_code)
     os.system(msg_code)
-    #os.system("rm %s"%(mail_msgfile))
+    os.system("rm %s"%(mail_msgfile))
 
 def send_email(to,subject, template, **kwargs):
     sender = MAIL_SENDER

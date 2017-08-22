@@ -1,3 +1,5 @@
+import os
+
 APP_NAME = "DemoKit"
 
 WTF_CSRF_ENABLED = True
@@ -7,5 +9,8 @@ MAIL_SENDER = "admin@workspace.com"
 
 CELERY_BROKER_URL = "redis://192.168.0.141:6379/0"
 CELERY_RESULT_BACKEND = 'redis://192.168.0.141:6379/0'
+
+UPLOADED_PHOTOS_DEST = os.getcwd() + '/files'
+
 
 DEBUG = True

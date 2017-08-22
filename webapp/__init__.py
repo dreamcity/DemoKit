@@ -7,6 +7,9 @@ from flask_login import LoginManager
 from pymongo import MongoClient
 from celery import Celery
 
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
+
+
 from config import *
 
 bootstrap = Bootstrap()
@@ -15,6 +18,9 @@ moment = Moment()
 
 db = MongoClient()
 celery  = Celery(APP_NAME, broker=CELERY_BROKER_URL)
+
+photos = UploadSet('photos', IMAGES)
+
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -31,6 +37,9 @@ def create_app():
     login_manager.init_app(app)
 
     celery.conf.update(app.config) 
+
+    configure_uploads(app, photos)
+    patch_request_class(app)  # set maximum file size, default is 16MB
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

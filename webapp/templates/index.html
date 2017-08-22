@@ -1,12 +1,22 @@
 {% extends "base.html" %}
-<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}DemoKit{% endblock %}
 
 {% block page_content %}
 	<div class="page-header">
     	<h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+    	<a href="{{ url_for('main.index') }}">Upload</a> | <a href="{{ url_for('main.manage_file') }}">Manage</a>
+	</div>
+	<div class="col-md-4">
+    		{{ wtf.quick_form(form) }}
+    		<br>
+    		{% if success %}
+		<br>
+		<p>Upload Success!</p>
+		{% endif %}
 	</div>
 {% endblock %}
+
 
 
