@@ -2,45 +2,50 @@
 import os
 import time
 import hashlib
+import subprocess
 
 # from flask import render_template, session, redirect, url_for, current_app
-from flask import Flask,current_app,render_template,request,redirect,url_for,session
+from flask import Flask,current_app,render_template,request,redirect,url_for,session,flash
 #from flask.ext.paginate import Pagination
 # from flask_paginate import Pagination
 
 #from ..email import send_email
 from . import main
 from .forms import UploadForm
-from .. import photos
+from .. import texts
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = UploadForm()
     if form.validate_on_submit():
-        for filename in request.files.getlist('photo'):
-            name = hashlib.md5(('admin' + str(time.time())).encode('UTF-8')).hexdigest()[:15]
-            photos.save(filename, name=name + '.')
-        success = True
-    else:
-        success = False
-    return render_template('index.html', form=form, success=success)
+        filename = form.text_file.data
+        name = hashlib.md5(('admin' + str(time.time())).encode('UTF-8')).hexdigest()[:15]
+        texts.save(filename, name=name + '.')
+        file_path = texts.path(name + '.txt')
+        input_info = subprocess.getoutput("cat %s"%file_path)
+        form.input_text.data = input_info
+        flash('Upload Success!')
+        return render_template('index.html', form=form)
+    return render_template('index.html', form=form)
+
 
 @main.route('/manage')
 def manage_file():
-    files_list = os.listdir(current_app.config['UPLOADED_PHOTOS_DEST'])
+    files_list = os.listdir(current_app.config['UPLOADED_TEXTS_DEST'])
     return render_template('manage.html', files_list=files_list)
 
 
 @main.route('/open/<filename>')
 def open_file(filename):
-    file_url = photos.url(filename)
+    file_url = texts.url(filename)
     return render_template('browser.html', file_url=file_url)
 
 @main.route('/delete/<filename>')
 def delete_file(filename):
-    file_path = photos.path(filename)
+    file_path = texts.path(filename)
     os.remove(file_path)
     return redirect(url_for('main.manage_file'))
+    
 # @main.route('/', methods=['GET', 'POST'])
 # def index():
 #     return render_template('index.html')
