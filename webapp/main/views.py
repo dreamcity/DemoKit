@@ -11,22 +11,27 @@ from flask import Flask,current_app,render_template,request,redirect,url_for,ses
 
 #from ..email import send_email
 from . import main
-from .forms import UploadForm
+from .forms import UploadForm, ActionForm
 from .. import texts
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = UploadForm()
-    if form.validate_on_submit():
-        filename = form.text_file.data
+    upload_form = UploadForm()
+    action_form = ActionForm()
+    if 'upload' in request.form and upload_form.validate_on_submit() :
+        filename = upload_form.text_file.data
         name = hashlib.md5(('admin' + str(time.time())).encode('UTF-8')).hexdigest()[:15]
         texts.save(filename, name=name + '.')
         file_path = texts.path(name + '.txt')
         input_info = subprocess.getoutput("cat %s"%file_path)
-        form.input_text.data = input_info
+        action_form.input_text.data = input_info
         flash('Upload Success!')
-        return render_template('index.html', form=form)
-    return render_template('index.html', form=form)
+        return render_template('index.html', upload_form=upload_form,action_form=action_form,output_flag = False)
+    if 'action' in request.form and action_form.validate_on_submit():
+        action_form.output_text.data = "Mission Complite!"
+        return render_template('index.html', upload_form=upload_form,action_form=action_form,output_flag = True)
+        
+    return render_template('index.html', upload_form=upload_form,action_form=action_form,output_flag = False)
 
 
 @main.route('/manage')

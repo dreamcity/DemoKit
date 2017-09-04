@@ -5,34 +5,39 @@
 
 {% block page_content %}
 	<div class="page-header">
-    	<h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-    	<a href="{{ url_for('main.index') }}">Upload</a> | <a href="{{ url_for('main.manage_file') }}">Manage</a>
+		<h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+		<a href="{{ url_for('main.index') }}">Upload</a> | <a href="{{ url_for('main.manage_file') }}">Manage</a>
 	</div>
 
 	<div>
-	<form action="" method="post" class="form" enctype="multipart/form-data" role="form">
-        {{ form.csrf_token }}
-        {{ form.input_text.label }}
-        <div class='form-group'>
-                {{ form.input_text(cols=50,rows=10) }}
-        </div>        
-	
-	<div class="form-group">
-                <div class="col-lg-3">
-                	<input id="text_file" name="text_file" required type="file"> 
-			{{ form.text_file }} | {{ form.text_file.data}} | {{ form.text_file.name}}
-			{{ form.text_file.validators[0]}}
-			{{ form.text_file.validators[0]}}
+		<form action="" method="post" class="form" enctype="multipart/form-data" role="form">
+			{{ action_form.csrf_token }}
+			{{ action_form.input_text.label }}
+			<div class='row'>
+				<div class="col-lg-4">
+					{{ action_form.input_text(cols=50,rows=15) }}
+				</div>
+				<div class="col-lg-2" style="padding: 120px 0;text-align: center;" >
+					{{ action_form.action }}
+				</div> 
+				{% if output_flag %}
+					<div class="col-lg-4">
+						{{ action_form.output_text(cols=50,rows=15) }}
+					</div> 	
+				{% endif %} 
+			</div>  
+		</form>
 
-		</div>
-                <div class="col-lg-2">
-                        {{ form.submit }}
-                </div>
-        </div>
-	</form>
+		<form action="" method="post" class="form" enctype="multipart/form-data" role="form">
+			{{ upload_form.csrf_token }}
+			<div class="row">
+				<div class="col-lg-3">
+					{{ wtf.form_field(upload_form.text_file,form_type="inline",horizontal_columns=('lg', 1, 3))}}
+				</div> 
+				<div class="col-lg-2">
+					{{ upload_form.upload }}
+				</div> 
+			</div>
+		</form>
 	</div>
-
 {% endblock %}
-
-
-
