@@ -7,7 +7,7 @@ from .. import db
 from ..models import *
 
 class LoginForm(FlaskForm):
-	email = StringField('Email', validators=[Required(), Length(1, 64),Email()])
+	email = StringField('Email Address', validators=[Required(), Length(1, 64),Email()])
 	password = PasswordField('Password', validators=[Required()])
 	remember_me = BooleanField('Keep me logged in')
 	submit = SubmitField('Signin')
@@ -16,10 +16,10 @@ class SignupForm(FlaskForm):
 	username = StringField('Username', validators=[
 						Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
 						'Usernames must have only letters, ''numbers, dots or underscores')])
-	email = StringField('Email', validators=[Required(), Length(1, 64),Email()])
+	email = StringField('Email Address', validators=[Required(), Length(1, 64),Email()])
 	password = PasswordField('Password', validators=[
 	Required(), EqualTo('password2', message='Passwords must match.')])
-	password2 = PasswordField('Confirm password', validators=[Required()])
+	password2 = PasswordField('Confirm Password', validators=[Required()])
 	submit = SubmitField('Signup')
 	def validate_email(self, field):
 		if db[DB_NAME][USERS_COLLECTION].find_one({"email":field.data}):
@@ -32,6 +32,6 @@ class SignupForm(FlaskForm):
 
 class PasswordForm(FlaskForm):
 	old_pwd = PasswordField('Old Password', validators=[Required()])
-	new_pwd = PasswordField('New password', validators=[Required()])
-	confirm_pwd = PasswordField('Confirm password', validators=[Required(),EqualTo('new_pwd', message='Passwords must match.')])
+	new_pwd = PasswordField('New Password', validators=[Required()])
+	confirm_pwd = PasswordField('Confirm Password', validators=[Required(),EqualTo('new_pwd', message='Passwords must match.')])
 	submit = SubmitField('Update Password')

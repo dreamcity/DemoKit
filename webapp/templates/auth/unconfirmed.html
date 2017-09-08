@@ -2,19 +2,43 @@
 
 {% block title %}Flasky - Confirm your account{% endblock %}
 
-{% block page_content %}
-<div class="page-header">
-    <h1>
-        Hello, {{ current_user.username }}!
-    </h1>
-    <h3>You have not confirmed your account yet.</h3>
-    <p>
-        Before you can access this site you need to confirm your account.
-        Check your inbox, you should have received an email with a confirmation link.
-    </p>
-    <p>
-        Need another confirmation email?
-        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
-    </p>
+{% block content %}
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">Message</h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li class="breadcrumb-item active">About</li>
+    </ol>
+
+    <!-- Intro Content -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>
+                Hello, {{ current_user.username }}!
+            </h2>
+            <h3>You have not confirmed your account yet.</h3>
+            <p>
+                Before you can access this site you need to confirm your account.
+                Check your inbox, you should have received an email with a confirmation link.
+            </p>
+            <p>
+                Need another confirmation email?
+                <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+            </p>
+        </div>
+    </div>
+    <!-- /.row -->
 </div>
+
+
 {% endblock %}
+
+{% block body_attribs %}{% endblock %}
+

@@ -1,15 +1,63 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% block title %}DemoKit - Signin{% endblock %}
 
-{% block title %}DemoKit - Sign In{% endblock %}
 
-{% block page_content %}
-<div class="page-header">
-    <h1>Sign In</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-    <br>
-    <p>New user? <a href="{{ url_for('auth.signup') }}">Click here to Sign Up</a>.</p>
-</div>
+{% block head %}
+  {{ super() }}
+
+  <link crossorigin="anonymous" href="{{ url_for('static', filename='css/github/basic_1.css') }}" media="all" rel="stylesheet" />
+
+  <link crossorigin="anonymous" href="{{ url_for('static', filename='css/github/signin_2.css') }} " media="all" rel="stylesheet" /> 
 {% endblock %}
+
+{% block content %}
+  {{ super() }}
+
+  <body class="logged-out env-production session-authentication page-responsive min-width-0">
+    <div class="header header-logged-out width-full pt-5 pb-4" role="banner">
+      <div class="container clearfix width-full">
+        <a class="header-logo" href="{{ url_for('main.index') }}" aria-label="Homepage" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark"><img src= "static/icon/sign.png"></a>
+      </div>
+    </div>
+    <div role="form">
+
+      <div id="js-pjax-container" data-pjax-container>
+
+
+        <div class="auth-form px-3" id="login">
+        <form accept-charset="UTF-8" action="" method="post">
+          <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="&#x2713;" />
+            {{ signin_form.csrf_token }}
+          </div>      
+          <div class="auth-form-header p-0">
+            <h1>Sign in to GitHub</h1>
+          </div>
+          
+          <div class="auth-form-body mt-3">
+            
+            {{ wtf.form_field(signin_form.email) }}
+
+            <label for="password">
+              Password <a href="{{ url_for('auth.signup') }}" class="label-link">Forgot password?</a>
+            </label>
+            <input class="form-control form-control input-block" id="password" name="password"  type="password" />
+            {{ wtf.form_field(signin_form.remember_me) }}
+            
+            <input class="btn btn-primary btn-block" data-disable-with="Signing in…" name="submit" type="submit" value="Sign in" />
+
+          </div>
+        </form>
+
+      <p class="create-account-callout mt-3">
+        New to GitHub?
+        <a href="{{ url_for('auth.signup') }}" data-ga-click="Sign in, switch to sign up">Create an account</a>.
+      </p>
+    </div>
+
+   </body>
+{% endblock %}
+
+
+{% block body_attribs %}{% endblock %}

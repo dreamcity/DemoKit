@@ -37,7 +37,7 @@ def signin():
 
 			return redirect(request.args.get('next') or url_for('main.index'))
 		flash('Invalid username or password.')
-	return render_template('auth/signin.html', form=form)
+	return render_template('auth/signin.html', signin_form=form)
 
 @auth.route('/signout')
 @login_required
@@ -80,8 +80,10 @@ def signup():
 		send_email(user.email, 'Confirm Your Account','auth/email/confirm', user=user, token=token)
 		flash('A confirmation email has been sent to you by email.')
 		db[DB_NAME][USERS_COLLECTION].update_one({"_id":uid},{'$set':user_info},upsert = True)
-		return redirect(url_for('auth.signin'))
-	return render_template('auth/signup.html', form=form)
+
+		login_user(User(user_info))
+		return redirect(request.args.get('next') or url_for('main.index'))
+	return render_template('auth/signup.html', signup_form=form)
 
 @auth.route('/confirm/<token>')
 @login_required

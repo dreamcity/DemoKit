@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}DemoKit - Signup{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link crossorigin="anonymous" href="{{ url_for('static', filename='css/github/basic_1.css') }}"  media="all" rel="stylesheet" /> 
+	<link crossorigin="anonymous" href="{{ url_for('static', filename='css/github/signup_2.css') }}" media="all" rel="stylesheet" /> 
+ </head> 
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-codelines">
+  <div class="container-lg p-responsive position-relative">
+    <div class="d-md-flex flex-items-center gutter-md-spacious">
+      <div class="col-md-7 text-center text-md-left ">
+        <h1 class="alt-h0 text-white lh-condensed-ultra mb-3">Built for developers</h1>
+        <p class="alt-lead mb-4">
+          GitHub is a development platform inspired by the way you work. From <a href="{{ url_for('main.index') }}" class="text-white jumbotron-link">open source</a> to <a href="{{ url_for('main.index') }}" class="text-white jumbotron-link">business</a>, you can host and review code, manage projects, and build software alongside millions of other&nbsp;developers.
+        </p>
+      </div>
+      <div class="mx-auto col-sm-8 col-md-5 hide-sm" role="form">
+        <div class="rounded-1 text-gray bg-gray-light py-4 px-4 px-md-3 px-lg-4">
+          <!-- '"` --><!-- </textarea></xmp> -->
+          <form accept-charset="UTF-8" action="" autocomplete="off" class="home-hero-signup js-signup-form" method="post" >
+            <div style="margin:0;padding:0;display:inline">
+              <input name="utf8" type="hidden" value="✓">
+              {{ signup_form.csrf_token }}
+            </div>              
+            <dl class="form-group mt-0">
+              <dt class="input-label">
+                <label class="form-label f5" for="username">Username</label>
+              </dt>
+              <dd>
+                <input type="text" name="username" id="username" class="form-control form-control-lg input-block" placeholder="Pick a username"  autofocus="autofocus">
+              </dd>
+            </dl>
+            <dl class="form-group">
+              <dt class="input-label">
+                <label class="form-label f5" for="email">Email</label>
+              </dt>
+              <dd>
+                <input type="text" name="email" id="email" class="form-control form-control-lg input-block js-email-notice-trigger" placeholder="you@example.com" >
+              </dd>
+            </dl>
+            <dl class="form-group">
+              <dt class="input-label">
+                <label class="form-label f5" for="password">Password</label>
+              </dt>
+              <dd>
+                <input type="password" name="password" id="password" class="form-control form-control-lg input-block" placeholder="Create a password" >
+              </dd>
+              <p class="form-control-note">Use at least one letter, one numeral, and seven characters.</p>
+            </dl>
+            <dl class="form-group">
+              <dt class="input-label">
+                <label class="form-label f5" for="password2">Check Password</label>
+              </dt>
+              <dd>
+                <input type="password" name="password2" id="password2" class="form-control form-control-lg input-block" placeholder="Repeat password" >
+              </dd>
+              <p class="form-control-note">Double check the password!!!</p>
+            </dl>
+            <input class="btn btn-primary btn-large f5 btn-block" data-disable-with="Signing in…" name="submit" type="submit" value="Sign up for GitHub" />
+            <p class="form-control-note mb-0 text-center">
+              By clicking "Sign up for GitHub", you agree to our
+              <a class="" href="https://help.github.com/terms" target="_blank">terms of service</a> and
+              <a class="" href="https://help.github.com/privacy" target="_blank">privacy policy</a>. <span class="js-email-notice">We’ll occasionally send you account related emails.</span>
+            </p>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

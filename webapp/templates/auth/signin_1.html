@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
-{% block title %}DemoKit - Settings{% endblock %}
+{% block title %}DemoKit - Signin{% endblock %}
 
 
 {% block head %}
@@ -30,28 +29,39 @@
         <form accept-charset="UTF-8" action="" method="post">
           <div style="margin:0;padding:0;display:inline">
             <input name="utf8" type="hidden" value="&#x2713;" />
-            {{ form.csrf_token }}
+            {{ signin_form.csrf_token }}
           </div>      
           <div class="auth-form-header p-0">
-            <h1>Update Password</h1>
+            <h1>Sign in to GitHub</h1>
           </div>
           
           <div class="auth-form-body mt-3">
+
+            <label for="email">
+              Email address
+            </label>
+
+            <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="form-control input-block" id="email" name="email" type="text" />
+
+            <label for="password">
+              Password <a href="{{ url_for('auth.signup') }}" class="label-link">Forgot password?</a>
+            </label>
+            <input class="form-control form-control input-block" id="password" name="password"  type="password" />
+            {{ wtf.form_field(signin_form.remember_me) }}
             
-            {{ wtf.form_field(form.old_pwd) }}
-            {{ wtf.form_field(form.new_pwd) }}
-            {{ wtf.form_field(form.confirm_pwd) }}
-            
-            <input class="btn btn-primary btn-block" data-disable-with="Updating ..." name="submit" type="submit" value="Update" />
+            <input class="btn btn-primary btn-block" data-disable-with="Signing in…" name="submit" type="submit" value="Sign in" />
 
           </div>
         </form>
 
+      <p class="create-account-callout mt-3">
+        New to GitHub?
+        <a href="{{ url_for('auth.signup') }}" data-ga-click="Sign in, switch to sign up">Create an account</a>.
+      </p>
     </div>
 
    </body>
 {% endblock %}
 
-{% block body_attribs %}{% endblock %}
-
-
+{% block footer %}
+{% endblock %}

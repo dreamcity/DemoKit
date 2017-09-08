@@ -11,10 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<body class="logged-out env-production session-authentication page-responsive min-width-0">
-<div role="form">
-
-<div class="jumbotron jumbotron-codelines" >
+<div class="jumbotron jumbotron-codelines">
   <div class="container-lg p-responsive position-relative">
     <div class="d-md-flex flex-items-center gutter-md-spacious">
       <div class="col-md-7 text-center text-md-left ">
@@ -60,29 +57,10 @@
           </form>
         </div>
       </div>
-    </div>
   </div>
 </div>
 
-<div class="featurette">
-  <div class="container-lg p-responsive">
-    <h6 class="alt-h4 text-normal text-gray text-center">
-      GitHub for teams
-    </h6>
-    <h2 class="alt-h1 lh-condensed mt-3 mb-2 text-center">
-      A better way to work together
-    </h2>
-    <p class="lead text-center col-md-8 mx-auto">
-      GitHub brings teams together to work through problems, move ideas forward, and learn from each other along the way.
-    </p>
-    <div class="text-center">
-        <a href="{{ url_for('auth.signup') }}" data-ga-click="Signup, Attempt, location:teams; group:excluded_from_experiment">Sign up your team</a>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
-</body>
 {% endblock %}
 
+{% block footer %}
+{% endblock %}
