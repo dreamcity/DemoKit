@@ -12,22 +12,22 @@
 	      <!-- Slide One - Set the background image for this slide in the line below -->
 	      <div class="carousel-item active" style="background-image: url('{{ url_for('static', filename='images/background_image_1900_1080_1.jpg') }}')">
 	        <div class="carousel-caption d-none d-md-block">
-	          <h3>First Slide</h3>
-	          <p>This is a description for the first slide.</p>
+	        	<h3>Life</h3>
+	          	<p>Life is coffee and sugar.</p>
 	        </div>
 	      </div>
 	      <!-- Slide Two - Set the background image for this slide in the line below -->
 	      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='images/background_image_1900_1080_2.jpg') }}')">
 	        <div class="carousel-caption d-none d-md-block">
-	          <h3>Second Slide</h3>
-	          <p>This is a description for the second slide.</p>
+	          <h3>Challenge</h3>
+	          <p>Ocean behinds the mountains.</p>
 	        </div>
 	      </div>
 	      <!-- Slide Three - Set the background image for this slide in the line below -->
 	      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='images/background_image_1900_1080_3.jpg') }}')">
 	        <div class="carousel-caption d-none d-md-block">
-	          <h3>Third Slide</h3>
-	          <p>This is a description for the third slide.</p>
+	          <h3>Peace</h3>
+	          <p>Nothing is seriours.</p>
 	        </div>
 	      </div>
 	    </div>
@@ -43,40 +43,40 @@
 	</header>
 	<div class="container" style="padding-bottom: 50px;">
 
-		<h1 class="my-4">Welcome to Modern Business</h1>
+		<h1 class="my-4">Welcome to DemoKit Platform</h1>
 
 		<!-- Marketing Icons Section -->
 		<div class="row">
 			<div class="col-lg-4 mb-4">
 				<div class="card h-100">
-					<h4 class="card-header">Card Title</h4>
+					<h4 class="card-header">Data Analysis</h4>
 					<div class="card-body">
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+						<p class="card-text">Including Data Processing, Digging, Statistics, Visualization and ... </p>
 					</div>
 					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Learn More</a>
+						<a href="{{ url_for('main.data_analysis') }}" class="btn btn-primary">Go Ahead</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-4 mb-4">
 				<div class="card h-100">
-					<h4 class="card-header">Card Title</h4>
+					<h4 class="card-header">Machine Learning</h4>
 					<div class="card-body">
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+						<p class="card-text">Including Clustering , Classification , Prediction, Matching and ...</p>
 					</div>
 					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Learn More</a>
+						<a href="{{ url_for('main.machine_learning') }}" class="btn btn-primary">Go Ahead</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-4 mb-4">
 				<div class="card h-100">
-					<h4 class="card-header">Card Title</h4>
+					<h4 class="card-header">Others</h4>
 					<div class="card-body">
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+						<p class="card-text">More funny function is coming...</p>
 					</div>
 					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Learn More</a>
+						<a href="{{ url_for('main.about') }}" class="btn btn-primary">Learn More</a>
 					</div>
 				</div>
 			</div>

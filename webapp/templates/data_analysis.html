@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        {% if sub_item == 0 %}
+          <li class="breadcrumb-item active">Data Analysis</li>
+        {% else %}
+          <li class="breadcrumb-item">
+            <a href="{{ url_for('main.data_analysis') }}">Data Analysis</a>
+          </li>
+          {% if sub_item == 1 %}
+            <li class="breadcrumb-item active">Processing</li>
+          {% elif sub_item == 2 %}
+            <li class="breadcrumb-item active">Digging</li>
+          {% elif sub_item == 3 %}
+            <li class="breadcrumb-item active">Statistics</li>
+          {% elif sub_item == 4 %}
+            <li class="breadcrumb-item active">Visualization</li>
+          {% endif %}
+        {% endif %}
+      </ol>
+
+      <!-- Content Row -->
+      <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-lg-2 mb-4">
+          <div class="list-group">
+            <a href="{{ url_for('main.data_analysis') }}" class="list-group-item {% if sub_item == 0 %}active{% endif %} ">Data Analysis</a>
+            <a href="{{ url_for('main.data_processing') }}" class="list-group-item {% if sub_item == 1 %}active{% endif %} ">Processing</a>
+            <a href="{{ url_for('main.data_digging') }}" class="list-group-item {% if sub_item == 2 %}active{% endif %} ">Digging</a>
+            <a href="{{ url_for('main.data_statistics') }}" class="list-group-item {% if sub_item == 3 %}active{% endif %} ">Statistics</a>
+            <a href="{{ url_for('main.data_visualization') }}" class="list-group-item {% if sub_item == 4 %}active{% endif %} ">Visualization</a>
+          </div>
+        </div>
+        <!-- Content Column -->
+        <div class="col-lg-10 mb-4">
+          {% if sub_item ==0 %}
+            <h2>Data Analysis</h2>
+            <p>Data Analysis including Processing, Digging, Statistics, Visualization</p>
+          {% elif sub_item ==1 %}
+            <h2>Processing</h2>
+            <p>Data Processing</p>
+          {% elif sub_item ==2 %}
+            <h2>Digging</h2>
+            <p>Data Digging</p>
+          {% elif sub_item ==3 %}
+            <h2>Statistics</h2>
+            <p>Data Statistics</p>
+          {% elif sub_item ==4 %}
+            <h2>Visualization</h2>
+            <p>Data Visualization</p>
+          {% endif %}
+
+        </div>
+      </div>
+      <!-- /.row -->
+
+    </div>
+{% endblock %}
+
+{% block body_attribs %}{% endblock %}

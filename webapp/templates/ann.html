@@ -1,0 +1,123 @@
+{% extends "classify.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+	{{ super() }}
+	<link crossorigin="anonymous" href="{{ url_for('static', filename='css/chart-demo.css') }}"  media="all" rel="stylesheet" /> 
+ </head> 
+{% endblock %}
+
+{% block content_column %}
+	<div class="col-lg-9">
+		<form action="" method="post" class="form" enctype="multipart/form-data" role="form">
+			{{ action_form.csrf_token }}
+			<div class='row'>
+				<div class="col-lg-5 col-sm-6 portfolio-item" style="height:auto !important;height:200px;min-height:200px" >
+					{{ action_form.input_text.label }}
+					{{ action_form.input_text(cols=45,rows=15) }}
+	            </div>
+	            <div class="col-lg-2 col-sm-6 portfolio-item" style="padding: 160px 0;text-align: center;">
+	            	{{ action_form.action }}
+	            </div>
+	            <div class="col-lg-5 col-sm-6 portfolio-item">
+					{{ action_form.output_text.label }}
+	            	{{ action_form.output_text(cols=45,rows=15) }}
+	            </div>
+			</div>  
+		</form>
+
+		<div class='row'>
+			<div class="col-lg-12 col-sm-6 portfolio-item">
+			    <div class="panel panel-default">
+			        <div class="panel-heading">
+			            Line Chart Example
+			        </div>
+			        <!-- /.panel-heading -->
+			        <div class="panel-body">
+			            <div class="flot-chart">
+			                <div class="flot-chart-content" id="flot-line-chart"></div>
+			            </div>
+			        </div>
+			        <!-- /.panel-body -->
+			    </div>
+			</div>
+	        <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Pie Chart Example
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-pie-chart_new"></div>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+	        </div>
+	    	<div class="col-lg-8 col-sm-6 portfolio-item">
+				<div class="panel panel-default">
+                    <div class="panel-heading">
+                        Multiple Axes Line Chart Example
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-line-chart-multi"></div>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+	        </div>
+			<div class="col-lg-12 col-sm-6 portfolio-item">
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Moving Line Chart Example
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-line-chart-moving"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+			<div class="col-lg-12 col-sm-6 portfolio-item">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Bar Chart Example
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-bar-chart"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+        </div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+ {{ super() }}
+ <script src="{{url_for('static', filename='vendor/jquery/jquery.js')}}"></script>
+ <!-- <script src="{{url_for('static', filename='vendor/flot/excanvas.min.js')}}"></script> -->
+ <script src="{{url_for('static', filename='vendor/flot/jquery.flot.js')}}"></script>
+ <script src="{{url_for('static', filename='vendor/flot/jquery.flot.pie.js')}}"></script>
+ <script src="{{url_for('static', filename='vendor/flot/jquery.flot.resize.js')}}"></script>
+ <script src="{{url_for('static', filename='vendor/flot/jquery.flot.time.js')}}"></script>
+ <script src="{{url_for('static', filename='data/flot-data.js')}}"></script>
+ <script src="{{url_for('static', filename='vendor/flot/jquery.flot.tooltip.min.js')}}"></script>
+{% endblock %}
+
+

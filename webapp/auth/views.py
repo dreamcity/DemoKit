@@ -105,4 +105,3 @@ def resend_confirmation():
 	return redirect(url_for('main.index'))
 
 
-                            
