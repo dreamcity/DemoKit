@@ -52,22 +52,47 @@ $(document).ready(function() {
 
 //Flot Pie Chart
 $(function() {
-    var datainfo = Number(document.getElementById("first").value);
+    console.log("pie");
+    console.log("datainfo:%o",document.getElementById('flot-pie-chart'));
+
+    var data = document.getElementById('flot-pie-chart');
+    console.log("datainfo object : %o",data);
+
+    var datainfo = data.getAttribute('data-value');
+    // datainfo = datainfo.getattribute('data-value');
+    console.log("datainfo object : %d",datainfo);
+    // var datainfo = eval('{{ base_json|safe}}')
+    // var datainfo = 1;
+    // console.log(datainfo);
+    //alert(datainfo);
+    // var datainfo = Number(document.getElementById("action_form.input_text").value);
+    // var data = [{
+    //     label: "Series 0",
+    //     data: datainfo.a
+    // }, {
+    //     label: "Series 1",
+    //     data: datainfo.b
+    // }, {
+    //     label: "Series 2",
+    //     data: datainfo.c
+    // }, {
+    //     label: "Series 3",
+    //     data: datainfo.d
+    // }];
     var data = [{
-        label: "Series 0",
+        label: datainfo,
         data: datainfo
     }, {
-        label: "Series 1",
+        label: datainfo,
         data: datainfo
     }, {
-        label: "Series 2",
+        label: datainfo,
         data: datainfo
     }, {
-        label: "Series 3",
+        label: datainfo,
         data: datainfo
     }];
-
-    var plotObj = $.plot($("#flot-pie-chart_new"), data, {
+    var plotObj = $.plot($("#flot-pie-chart"), data, {
         series: {
             pie: {
                 show: true

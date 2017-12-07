@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import time
 import hashlib
 import subprocess
@@ -16,6 +17,8 @@ from . import main
 from .forms import UploadForm, ActionForm
 from .. import texts
 
+sys.path.append("../../")
+from webengine.classification import nlplib
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -88,7 +91,7 @@ def classify_nlp():
 		return render_template('nlp.html', upload_form=upload_form,action_form=action_form,output_flag = False)
 	
 	if 'action' in request.form and action_form.validate_on_submit():
-		action_form.output_text.data = "Mission Complite!"
+		action_form.output_text.data = nlplib.NLP().words_split(action_form.input_text.data)
 		return render_template('nlp.html', upload_form=upload_form,action_form=action_form,output_flag = True)
 
 	return render_template('nlp.html', upload_form=upload_form,action_form=action_form,output_flag = False)
