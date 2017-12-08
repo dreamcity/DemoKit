@@ -76,7 +76,9 @@ def classify_ann():
 	action_form = ActionForm()
 	if 'action' in request.form and action_form.validate_on_submit():
 		action_form.output_text.data = action_form.input_text.data
-		base_json = int(action_form.input_text.data)
+		# base_json = json.dumps(action_form.input_text.data)
+		base_json = action_form.input_text.data
+		print("base_json",base_json)
 		return render_template('ann.html', action_form=action_form,base_json = base_json)
 
 	return render_template('ann.html', action_form=action_form)

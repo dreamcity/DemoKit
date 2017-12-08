@@ -52,46 +52,53 @@ $(document).ready(function() {
 
 //Flot Pie Chart
 $(function() {
-    console.log("pie");
-    console.log("datainfo:%o",document.getElementById('flot-pie-chart'));
+    //console.log("pie");
+    //console.log("datainfo:%o",document.getElementById('flot-pie-chart'));
 
     var data = document.getElementById('flot-pie-chart');
-    console.log("datainfo object : %o",data);
+    //console.log("data object : %o",data);
 
     var datainfo = data.getAttribute('data-value');
+
+
     // datainfo = datainfo.getattribute('data-value');
-    console.log("datainfo object : %d",datainfo);
+    // console.log("datainfo str : %s",datainfo);
+    // console.log("datainfo object : %o",datainfo);
+
+    // var data_obj = datainfo;
+    var data_obj = eval("("+datainfo+")");
+    //console.log("datainfo object : %o",data_obj);
     // var datainfo = eval('{{ base_json|safe}}')
     // var datainfo = 1;
-    // console.log(datainfo);
+    //console.log(datainfo);
     //alert(datainfo);
     // var datainfo = Number(document.getElementById("action_form.input_text").value);
-    // var data = [{
-    //     label: "Series 0",
-    //     data: datainfo.a
-    // }, {
-    //     label: "Series 1",
-    //     data: datainfo.b
-    // }, {
-    //     label: "Series 2",
-    //     data: datainfo.c
-    // }, {
-    //     label: "Series 3",
-    //     data: datainfo.d
-    // }];
     var data = [{
-        label: datainfo,
-        data: datainfo
+        label: "Series 0",
+        data: data_obj.pie_data[0]
     }, {
-        label: datainfo,
-        data: datainfo
+        label: "Series 1",
+        data: data_obj.pie_data[1]
     }, {
-        label: datainfo,
-        data: datainfo
+        label: "Series 2",
+        data: data_obj.pie_data[2]
     }, {
-        label: datainfo,
-        data: datainfo
+        label: "Series 3",
+        data: data_obj.pie_data[3]
     }];
+    // var data = [{
+    //     label: data_obj.a,
+    //     data: data_obj.a
+    // }, {
+    //     label: data_obj.b,
+    //     data: data_obj.b
+    // }, {
+    //     label: data_obj.a,
+    //     data: data_obj.b * data_obj.a
+    // }, {
+    //     label: data_obj.b,
+    //     data: data_obj.a + data_obj.b
+    // }];
     var plotObj = $.plot($("#flot-pie-chart"), data, {
         series: {
             pie: {
