@@ -7,7 +7,7 @@ import subprocess
 import json
 # from flask import render_template, session, redirect, url_for, current_app
 # from flask import Flask,current_app,render_template,request,redirect,url_for,session,flash
-from flask import render_template,request,flash
+from flask import render_template,request,flash,url_for,redirect,jsonify
 #from flask.ext.paginate import Pagination
 # from flask_paginate import Pagination
 from flask_login import current_user
@@ -19,7 +19,9 @@ from .forms import UploadForm, ActionForm
 from .. import texts
 
 sys.path.append("../../")
-from webengine.classification import nlplib
+from webengine.classification import linear_model , nlplib
+
+result_flag = False
 
 #Machine Learning----------------------------------------------------
 @main.route('/machine_learning')
@@ -83,7 +85,47 @@ def classify_ann():
 
 	return render_template('ann.html', action_form=action_form)
 
+@main.route('/machine_learning/classify/bayes', methods=['GET', 'POST'])
+def classify_bayes():
+	print(request)
+	if request.form.get("result_flag") or request.args.get("result_flag"):
+		return render_template('bayes.html',result_flag = True)
+	return render_template('bayes.html',result_flag = False)
+
+# @main.route('/machine_learning/classify/bayes',methods=['GET','POST'])
+# def classify_bayes():
+# 	print(request.args.get("result_flag"))
+# 	if request.args.get("result_flag"):
+# 		return jsonify('update',render_template('bayes.html',result_flag = True))
+# 		# return render_template('bayes.html',result_flag = True)
+# 		# return render_template('index.html',result_flag = True)
+# 	return render_template('bayes.html',result_flag = False)
 
 @main.route('/machine_learning/predict')
 def predict():
 	return render_template('predict.html')
+
+@main.route('/classify_bayes',methods=['GET','POST'])
+def classify_bayes_test():
+	# global result_flag
+	# result_flag = True
+	print("helloworld")
+	# LM = linear_model.LinearModel()
+	# LM.run_linear_model()
+	return redirect(url_for('main.classify_bayes',result_flag=True))
+	
+	# return redirect(url_for('main.index'))
+	return render_template('bayes.html',result_flag = True)
+	
+	# return jsonify('update',render_template('bayes.html',result_flag = True))
+	# return redirect(url_for('main.classify_bayes',result_flag=True))
+	# return redirect(url_for('main.classify_bayes',result_flag=True))
+	# return render_template('bayes.html',result_flag = True)
+	# return redirect(url_for('main.classify_bayes',result_flag=True))
+
+	# return redirect(request.args.get('next') or url_for('main.index'))
+	# return redirect('bayes.html',result_flag = True)
+
+
+
+

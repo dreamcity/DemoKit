@@ -1,0 +1,70 @@
+{% extends "classify.html" %}
+
+
+
+{% block content_column %}
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 portfolio-item" style="height:auto !important;height:50px;min-height:50px" >
+          <div class="card h-50">
+            <!-- <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a> -->
+			<button class="btn1" style="height:auto !important;height:50px;min-height:50px" >click test</button>
+          </div>
+        </div>
+
+      </div>
+
+
+      {% if result_flag %}
+      	<div class="row" id="result">
+        	<div class="col-lg-3 col-sm-6 portfolio-item" >
+        		<img src="{{ url_for('static', filename='tmp/common_result.jpg') }}">
+        	</div>
+
+      	</div>
+      {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+	{{super()}}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".btn1").click(function(){
+				$.ajax({url:"/machine_learning/classify/bayes",data:{"result_flag":"True"},success:function(data){
+						// alert("done");
+						console.log(data);
+						$("html").empty();
+						$("html").append(data);
+					}
+				});
+				
+				// $.get("/classify_bayes",
+				// 	function(data, status){
+				// 		alert("okkk");
+				// 	// console.log("return result: " + data + "\nstate: " + status);
+				// });
+
+				// $.ajax({
+				// 	url:"/machine_learning/classify/bayes",
+				// 	type:"POST",
+				// 	dataType:"json",
+				// 	data:{"result_flag":"True"},
+				// 	success:function(data){
+				// 		alert("done");
+				// 		console.log(data);
+				// 	}
+				// });
+			});
+		});
+	</script>
+{% endblock %}
+
+
+{% block body_attribs %}
+	{% if result_flag %}
+		style="position: relative;" 
+	{% endif %}
+{% endblock %}
